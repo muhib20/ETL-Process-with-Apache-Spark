@@ -1,0 +1,62 @@
+update the following files according to your hostname in your etc/hadoop directory 
+core-site.xml:
+<property>
+    <name>fs.default.name</name>
+    <value>hdfs://your_hostname:50000</value>
+</property>
+
+yarn-site.xml:
+<property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>your_hostname</value>
+</property>
+<property>
+    <name>yarn.resourcemanager.address</name>
+    <value>your_hostname:8032</value>
+</property>
+
+hdfs-site.xml:
+<property>
+    <name>dfs.namenode.name.dir</name>
+    <value>/home/cloud_user/hadoop-3.3.6/namenode_data</value> #adjust the path
+</property>
+<property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/home/cloud_user/hadoop-3.3.6/datanode_data</value>#adjust the path
+</property>
+mapred-site.xml:
+<property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+</property>
+hadoop-env.sh, mapred-env.sh, yarn-env.sh:
+export JAVA_HOME=/home/username/jdk1.8.0_45
+
+vi etc/hadoop/slaves
+hostname
+
+Install the ssh key
+(Generates, Manages and Converts Authentication keys)
+ sudo apt-get install openssh-server
+ ssh-keygen -t rsa
+(Setup passwordless ssh to localhost and to slaves )
+ cd .ssh
+ ls
+ cat id_rsa.pub >> authorized_keys (copy the .pub)
+(Copy the id_rsa.pub from NameNode to authorized_keys in all machines)
+ ssh localhost
+(Asking No Password )
+
+Format NameNode
+ cd hadoop directory
+ bin/hadoop namenode -format (Your Hadoop File System Ready)
+
+sbin/start-all.sh
+JPS
+
+(check the Browser Web GUI )
+NameNode - http://localhost:50070/
+Resource Manager - http://localhost:8088/
+
+Stop All Hadoop and Yarn Related Services
+ sbin/stop-all.sh

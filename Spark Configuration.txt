@@ -1,0 +1,67 @@
+Step 1: Java Installation
+You can use OpenJDK or Oracle JDK
+sudo apt-get update
+sudo apt-get install openjdk-11-jdk
+Set the JAVA_HOME environment variable
+vi .bashrc
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64  # Adjust the path based on your installation
+export PATH=$JAVA_HOME/bin:$PATH
+source .bahsrc
+
+Step 2: Hadoop Installation
+wget https://archive.apache.org/dist/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+tar -zxvf hadoop-3.3.6.tar.gz
+Set the HADOOP_HOME and update PATH:
+vi .bashrc
+export HADOOP_HOME=/home/cloud_user/hadoop-3.3.6  # Adjust the path based on your installation
+export PATH=$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$PATH
+source .bahsrc
+
+Step 3: Scala Installation
+sudo apt-get install scala
+scala -version #Verify the installation
+Set the SCALA_HOME:
+vi .bashrc
+export SCALA_HOME=$(dirname $(dirname $(which scala)))
+export PATH=$SCALA_HOME/bin:$PATH
+source .bahsrc
+
+Step 4: Spark Installation
+wget https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+tar -zxvf spark-3.5.0-bin-hadoop3.tgz
+Set the SPARK_HOME and update PATH
+vi .bashrc
+export SPARK_HOME=/home/cloud_user/spark-3.5.0-bin-hadoop3  # Adjust the path based on your installation
+export PATH=$SPARK_HOME/sbin:$SPARK_HOME/bin:$PATH
+source .bahsrc
+
+Step 5: Configure Spark
+cd $SPARK_HOME/conf
+cp spark-env.sh.template spark-env.sh #Copy the template configuration file
+Edit spark-env.sh and set the JAVA_HOME:
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64  # Adjust the path based on your installation
+
+Step 6: Start Hadoop (Optional)
+#check hadoop configuration file to proper start hadoop
+start-dfs.sh
+start-yarn.sh
+
+Step 7: Start Spark Master
+sbin/start-master.sh
+bin/start-master.sh
+start-worker.sh spark://hostname:7077 # actual IP or hostname of your Spark master.
+
+Manual Launch if master spark is not start by above command adjust the path and hostname:
+/home/cloud_user/spark-3.5.0-bin-hadoop3/bin/spark-class org.apache.spark.deploy.master.Master --host 81deb8802f1c.mylabserver.com --port 7077 --webui-port 8080
+
+web interface: http://81deb8802f1c.mylabserver.com:8081
+
+Save the csv_transformation.py file in any directory
+/home/cloud_user/csv_transformation.py
+/home/cloud_user/scripts/csv_transformation.py
+check the PySpark file for Python script
+
+spark-submit csv_transformation.py #execute command from your spark directory cloud_user@81deb8802f1c:~/spark-3.5.0-bin-hadoop3$
+
+sbin/stop-worker.sh
+sbin/stop-all.sh
