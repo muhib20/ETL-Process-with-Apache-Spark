@@ -1,6 +1,6 @@
 # ETL-Process-with-Apache-Spark
 ## Description
-This project demonstrates an ETL process using Apache Spark. The ETL process involves extracting data from various sources, transforming it as needed, and loading the processed data into a target storage system, which in this case is the Hadoop Distributed File System (HDFS).
+This project demonstrates an ETL process using Apache Spark. The ETL process involves extracting data from various sources, transforming it as needed, and loading the processed data into a target storage system, which in this case is the Hadoop Distributed File System (HDFS). it was built following a tutorial to learn the tooling.
 
 ## Installation
 To run this project, follow these steps:
